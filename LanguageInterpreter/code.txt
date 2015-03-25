@@ -1,0 +1,31 @@
+function (  ) {
+	"ab = 1/0;"
+	k = array[100];
+	print  !true;
+	read n;
+	i = 2;
+	z = 0;
+	while ( true ) { 
+		if ( i>n ) { break; }
+		j=2;
+		s=1;
+		while ( true ) { 
+			if ( i%j == 0 && i!=2 ) { 
+				s=0;
+			} else {
+			}
+			if ( s==0 || j*j > i ) { break; }
+			j = j+1;
+		}
+		if ( s = 1 ) { 
+			{}
+			k[z]=array[1];
+			{}
+			k[z]=i;
+			print i + "\n";
+			z=z+1;
+		} else {
+		}
+		i = i + 1;
+	}
+} 
