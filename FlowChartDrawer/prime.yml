@@ -1,0 +1,28 @@
+--- !drawer.entity.block.BeginBlock
+nextBlock: !drawer.entity.block.ReadBlock
+  nextBlock: !drawer.entity.block.SetBlock
+    nextBlock: !drawer.entity.block.LoopBlock
+      backBlock: !drawer.entity.block.SetBlock
+        nextBlock: !drawer.entity.block.LoopBlock
+          backBlock: !drawer.entity.block.SetBlock
+            text: "j = j+1 "
+          initBlock: !drawer.entity.block.IfBlock
+            leftBlock: !drawer.entity.block.SetBlock
+              text: "s=0 "
+            text: "i%j == 0 and i!=2 "
+          nextBlock: !drawer.entity.block.IfBlock
+            leftBlock: !drawer.entity.block.PrintBlock
+              text: "i + \"\\n\" "
+            nextBlock: !drawer.entity.block.SetBlock
+              text: "i = i + 1 "
+            text: "s = 1 "
+          text: "s==0 or j*j > i "
+        text: |
+          j = 2
+          s = 1 
+      nextBlock: !drawer.entity.block.PrintBlock
+        nextBlock: !drawer.entity.block.EndBlock {}
+        text: "\"finished\" "
+      text: "i>n "
+    text: "i = 2 "
+  text: "n "
