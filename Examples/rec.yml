@@ -1,6 +1,8 @@
 --- !drawer.entity.block.BeginBlock
 nextBlock: !drawer.entity.block.ReadBlock
   nextBlock: !drawer.entity.block.PrintBlock
-    nextBlock: !drawer.entity.block.EndBlock {}
-    text: "\"factorialiin \"+n+\"-r gishuun = \"+fac(n)+\"\\n\" "
+    nextBlock: !drawer.entity.block.PrintBlock
+      nextBlock: !drawer.entity.block.EndBlock {}
+      text: "\"factorialiin \"+n+\"-r gishuun = \"+fac(n)+\"\\n\" "
+    text: "\"fibonaciin \"+n+\"-r gishuun = \"+fib(n)+\"\\n\" "
   text: "n "
