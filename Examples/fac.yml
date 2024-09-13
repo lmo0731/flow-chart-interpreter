@@ -1,0 +1,10 @@
+--- !drawer.entity.block.BeginBlock
+nextBlock: !drawer.entity.block.IfBlock
+  leftBlock: !drawer.entity.block.SetBlock
+    text: "r = fac(n-1)+fac(n-2) "
+  nextBlock: !drawer.entity.block.EndBlock
+    text: "r "
+  rightBlock: !drawer.entity.block.SetBlock
+    text: "r = 1 "
+  text: "n>1 "
+text: "n "
