@@ -4,8 +4,6 @@
  */
 package interpreter.tools;
 
-import interpreter.tree.FTree;
-
 /**
  *
  * @author LMO

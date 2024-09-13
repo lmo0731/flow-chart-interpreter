@@ -4,6 +4,12 @@
  */
 package interpreter;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import interpreter.exceptions.BreakException;
 import interpreter.exceptions.InterpretException;
 import interpreter.memory.Location;
@@ -12,12 +18,27 @@ import interpreter.memory.Pointer;
 import interpreter.tools.Input;
 import interpreter.tools.Output;
 import interpreter.tools.Reader;
-import interpreter.tree.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import interpreter.tree.BTree;
+import interpreter.tree.CTree;
+import interpreter.tree.CTreeB;
+import interpreter.tree.CTreeD;
+import interpreter.tree.CTreeF;
+import interpreter.tree.CTreeI;
+import interpreter.tree.CTreeP;
+import interpreter.tree.CTreeR;
+import interpreter.tree.CTreeS;
+import interpreter.tree.CTreeW;
+import interpreter.tree.DTree;
+import interpreter.tree.DTreeA;
+import interpreter.tree.ETree;
+import interpreter.tree.FTree;
+import interpreter.tree.LTree;
+import interpreter.tree.LTreeI;
+import interpreter.tree.LTreeV;
+import interpreter.tree.VTree;
+import interpreter.tree.VTreeF;
+import interpreter.tree.VTreeL;
+import interpreter.tree.VTreeV;
 
 /**
  *
@@ -359,13 +380,16 @@ public class Interpreter implements Runnable {
             ret = this.toBoolean(v1) || this.toBoolean(v2);
         } else if (Language.andKeys().contains(op.toLowerCase())) {
             ret = this.toBoolean(v1) && this.toBoolean(v2);
-        } else if ((op.equals("==") || op.equals("=")) && (v1.getClass().equals(String.class) || v2.getClass().equals(String.class))) {
+        } else if ((op.equals("==") || op.equals("="))
+                && (v1.getClass().equals(String.class) || v2.getClass().equals(String.class))) {
             ret = v1.toString().equals(v2.toString());
-        } else if ((op.equals("!=") || op.equals("<>")) && (v1.getClass().equals(String.class) || v2.getClass().equals(String.class))) {
+        } else if ((op.equals("!=") || op.equals("<>"))
+                && (v1.getClass().equals(String.class) || v2.getClass().equals(String.class))) {
             ret = v1.toString().equals(v2.toString());
         } else if (op.equals("+") && (v1.getClass().equals(String.class) || v2.getClass().equals(String.class))) {
             ret = v1.toString() + v2.toString();
-        } else if (v1.getClass().getSuperclass().equals(Number.class) && v2.getClass().getSuperclass().equals(Number.class)) {
+        } else if (v1.getClass().getSuperclass().equals(Number.class)
+                && v2.getClass().getSuperclass().equals(Number.class)) {
             double b1, b2;
             b1 = ((Number) v1).doubleValue();
             b2 = ((Number) v2).doubleValue();
@@ -394,7 +418,8 @@ public class Interpreter implements Runnable {
             } else {
                 this.error("unknown operator: " + op);
             }
-            if (ret.getClass().equals(Double.class) && (Double.isInfinite(((Double) ret)) || Double.isNaN(((Double) ret)))) {
+            if (ret.getClass().equals(Double.class)
+                    && (Double.isInfinite(((Double) ret)) || Double.isNaN(((Double) ret)))) {
                 error("illegal arithmetic expression");
             }
             if (v1.getClass().equals(Long.class)) {
@@ -405,7 +430,8 @@ public class Interpreter implements Runnable {
         } else if (v1.getClass().equals(Pointer.class) || v2.getClass().equals(Pointer.class)) {
             this.error(etree + "\ninvalid operator '" + op + "' for array");
         } else {
-            this.error(etree + "\ninvalid operator '" + op + "' between " + v1.toString() + ", " + v2.toString() + "; ");
+            this.error(
+                    etree + "\ninvalid operator '" + op + "' between " + v1.toString() + ", " + v2.toString() + "; ");
         }
         return ret;
     }
@@ -417,14 +443,17 @@ public class Interpreter implements Runnable {
             return memory.getData(this.interpretL(((VTreeL) vtree).getLtree()));
         } else if (vtree.getClass().equals(VTreeF.class)) {
             VTreeF v = (VTreeF) vtree;
-            Vector<String> func = new Vector<String>(Arrays.asList(new String[]{"acos", "asin", "atan", "ceil", "cos", "exp", "fabs", "floor", "log", "log10", "sin", "sqrt", "tan", "min", "max", "pow", "abs"}));
+            Vector<String> func = new Vector<String>(Arrays.asList(new String[] { "acos", "asin", "atan", "ceil", "cos",
+                    "exp", "fabs", "floor", "log", "log10", "sin", "sqrt", "tan", "min", "max", "pow", "abs" }));
             if (func.contains(v.getFunction().toLowerCase())) {
                 if (v.getArgs().size() == 1) {
                     Object a1 = this.interpretV(v.getArgs().get(0));
                     if (a1.getClass().getSuperclass().equals(Number.class)) {
                         try {
-                            Object ret = Math.class.getMethod(v.getFunction().toLowerCase(), double.class).invoke(this, ((Number) a1).doubleValue());
-                            if (ret.getClass().equals(Double.class) && Double.isInfinite((Double) ret) || Double.isNaN((Double) ret)) {
+                            Object ret = Math.class.getMethod(v.getFunction().toLowerCase(), double.class).invoke(this,
+                                    ((Number) a1).doubleValue());
+                            if (ret.getClass().equals(Double.class) && Double.isInfinite((Double) ret)
+                                    || Double.isNaN((Double) ret)) {
                                 error("illegal arithmetic expression");
                             }
                             return ret;
@@ -437,9 +466,11 @@ public class Interpreter implements Runnable {
                 } else if (v.getArgs().size() == 2) {
                     Object a1 = this.interpretV(v.getArgs().get(0));
                     Object a2 = this.interpretV(v.getArgs().get(1));
-                    if (a1.getClass().getSuperclass().equals(Number.class) && a2.getClass().getSuperclass().equals(Number.class)) {
+                    if (a1.getClass().getSuperclass().equals(Number.class)
+                            && a2.getClass().getSuperclass().equals(Number.class)) {
                         try {
-                            return Math.class.getMethod(v.getFunction().toLowerCase(), double.class, double.class).invoke(this, ((Number) a1).doubleValue(), ((Number) a2).doubleValue());
+                            return Math.class.getMethod(v.getFunction().toLowerCase(), double.class, double.class)
+                                    .invoke(this, ((Number) a1).doubleValue(), ((Number) a2).doubleValue());
                         } catch (Exception ex) {
                             error(v.getFunction() + " function not found");
                         }

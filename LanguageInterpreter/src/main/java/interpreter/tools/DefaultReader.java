@@ -4,12 +4,10 @@
  */
 package interpreter.tools;
 
-import interpreter.exceptions.ParseException;
-import interpreter.Parser;
-import interpreter.tree.FTree;
-import interpreter.tree.FTree;
-import java.io.*;
-import java.util.HashMap;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -17,25 +15,43 @@ import java.util.HashMap;
  */
 public class DefaultReader implements Reader {
 
+    public File home = new File(System.getProperty("user.dir"));
+
+    public File getHome() {
+        return home;
+    }
+
+    public void setHome(File home) {
+        this.home = home;
+    }
+
     public DefaultReader() {
     }
 
     @Override
     public String readCode(String name) throws Exception {
-        String filePath = name + ".txt";
+        String filePath = home.getAbsolutePath() + File.separatorChar + name + ".txt";
         String ret = "";
-        BufferedReader in = null;
+        InputStreamReader in = null;
         File fileDir = new File(filePath);
         System.out.println(fileDir.getAbsolutePath());
-        in = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(fileDir), "UTF-8"));
-        String str;
-        while ((str = in.readLine()) != null) {
-            ret += str + "\n";
+        try {
+            in = new InputStreamReader(new FileInputStream(fileDir), "UTF-8");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            while (true) {
+                int c = in.read();
+                if (c == -1) {
+                    break;
+                }
+                baos.write(c);
+            }
+            ret = baos.toString("UTF-8");
+            System.out.println(ret);
+        } finally {
+            if (in != null) {
+                in.close();
+            }
         }
-        System.out.println(ret);
-        in.close();
         return ret;
     }
 }

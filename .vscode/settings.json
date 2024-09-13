@@ -1,0 +1,10 @@
+{
+    "java.completion.filteredTypes": [
+        "javax.swing.*",
+        "com.sun.*",
+        "sun.*",
+        "jdk.*",
+        "org.graalvm.*",
+        "io.micrometer.shaded.*"
+    ]
+}

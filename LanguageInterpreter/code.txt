@@ -1,5 +1,4 @@
 function (  ) {
-	"ab = 1/0;"
 	k = array[100];
 	print  !true;
 	read n;
@@ -18,9 +17,6 @@ function (  ) {
 			j = j+1;
 		}
 		if ( s = 1 ) { 
-			{}
-			k[z]=array[1];
-			{}
 			k[z]=i;
 			print i + "\n";
 			z=z+1;

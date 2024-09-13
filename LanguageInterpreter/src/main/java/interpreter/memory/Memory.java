@@ -48,13 +48,14 @@ public class Memory {
         } else if (e != null && e.getClass().equals(HashMap.class) && location.getKey().getClass().equals(String.class)) {
             HashMap<String, Object> h = (HashMap<String, Object>) e;
             if (!h.containsKey((String) location.getKey())) {
-                throw new NotDeclaredMemoryException((String) location.getKey() + " variable not declared");
+                // throw new NotDeclaredMemoryException((String) location.getKey() + " variable not declared");
                 //h.put((String) location.getKey(), new Long(0));
             }
             return h.get((String) location.getKey());
         } else {
-            throw new MemoryException("invalid key type " + location.getKey().toString());
+            // throw new MemoryException("invalid key type " + location.getKey().toString());
         }
+        return null;
     }
 
     public Object getArray(Pointer pointer) {
